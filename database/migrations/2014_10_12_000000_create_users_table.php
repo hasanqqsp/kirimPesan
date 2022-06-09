@@ -20,7 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique()->required();            
             $table->string('password')->required();
             $table->boolean('defaultHide')->default('false');
-            $table->text('bio');
+            $table->text('bio')->nullable();
+            $table->string('avatar')->nullable();
             
             $table->timestamps();
         });

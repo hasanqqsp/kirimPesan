@@ -1,53 +1,49 @@
-@extends('layouts.main')
-@section('page_title')
-Daftar kirimPesan
-@endsection
-
-@section('header_text')
-Buat dashboard pribadimu dan  biarkan temanmu mengirimkan pesan secara anonim.</h4>
-@endsection
-
-@section('main_container')
-  				<div class="card text-left" style="width: 25rem;">
-  				
-				  <div class="card-header">
-				  <h2 class="h3 my-2">Buat Akun</h2>
-				  </div>
-		 	<form method="post">
-				  <ul class="list-group list-group-flush">
-				    <li class="list-group-item">
-				     <div class="alert alert-danger" role="alert">
-					  A simple danger alert—check it out!
+@extends('layouts.36rem')
+@section("page_title") Buat Dashboard KirimPesan @endsection 		
+@section('main_container')	
+		@section("header_text")
+			Buat dashboard dapatkan pesan anonim dari temanmu
+		@endsection
+			<main>
+				<form action="" method="post">
+					@csrf
+					<div class="form-floating mb-3">
+						<input type="text" value="{{old("name")}}" class="form-control @error("name") is-invalid @enderror" id="inputName" placeholder="Nama" name="name">
+						<label for="inputName">Nama Tampilan</label>
+						@error("name")
+							<div class="invalid-feedback">
+								{{$message}}
+							</div>
+						@enderror
 					</div>
-				    </li>
-				    <li class="list-group-item">
-				    <div class="mb-3">
-					  <label for="name" class="form-label">Nama Tampilan</label>
-					  <input type="text" class="form-control"autofocus id="name" placeholder="Nama akan ditampilkan ke temanmu">
+					<div class="form-floating mb-3">
+						<input type="email" value="{{old("email")}}" class="form-control @error("email") is-invalid @enderror" placeholder="Alamat Email " id="emailInput" name="email">
+						<label for="emailInput">Alamat Email</label>
+						@error("email")
+							<div class="invalid-feedback">
+								{{$message}}
+							</div>
+						@enderror
 					</div>
-				    </li>
-				    
-				    <li class="list-group-item">
-				    <div class="mb-3">
-					  <label for="email" class="form-label">Alamat Email</label>
-					  <input type="email" class="form-control" id="email" placeholder="name@example.com">
+					<div class="form-floating mb-3">
+						<input type="password" class="form-control @error("password") is-invalid @enderror" placeholder="Kata Sandi minimal 6 karakter" id="passwordInput" name="password">
+						<label for="passwordInput">Password</label>
 					</div>
-				    </li>
-				    
-				    <li class="list-group-item">
-				    <div class="mb-3">
-					  <label for="password" class="form-label">Kata Sandi</label>
-					  <input type="password" class="form-control" id="password" placeholder="password">
+					<div class="form-floating mb-3">
+						<input type="password" class="form-control @error("password") is-invalid @enderror" placeholder="Kata Sandi minimal 6 karakter" id="passwordConfirmInput" name="password_confirmation">
+						<label for="passwordInput">Konfirmasi Password</label>
+						@error("password")
+							<div class="invalid-feedback">
+								{{$message}}
+							</div>
+						@enderror
 					</div>
-				    </li>
-				    <li class="list-group-item">
-				    <div class="my-3 d-grid gap-2">
-					  <button class="btn btn-primary btn-block">Buat Akun</button>
-					</div>
-				    </li>
-				    </ul>
-				 
-			    </div>
-			    </form>
-			  </div>
-  			@endsection
+					<div class="d-grid gap-2">
+						<button class="btn btn-primary btn-lg" type="submit">Daftar Sekarang</button>
+					  </div>
+				</form>
+				<div class="mt-2 text-center text-muted">
+					<em>Sudah memiliki akun? <a href="/login">Masuk disini</a></em>
+				</div>
+			</main>
+	@endsection

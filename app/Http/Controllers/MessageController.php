@@ -24,12 +24,12 @@ class MessageController extends Controller
 		
 		Message::create($message_data);
 		
-		return redirect('/'.$user_id)->with('success','Pesan anda berhasil dikirimkan.');
+		return redirect('/'.$user_id.'?admin=1')->with('success','Pesan anda berhasil dikirimkan.');
 	}
 	
     public function destroy ($id,$messageId){
 		Message::destroy($messageId);
-		return redirect('/dashboard/'.$id)->with('danger','Pesan Telah dihapus');
+		return redirect('/'.$id.'?admin=1')->with('danger','Pesan Telah dihapus');
 	}
 	
 	public function hide ($id,$messageId){
@@ -42,7 +42,7 @@ class MessageController extends Controller
 							'isPinned' => 0,
 							]);
 		};
-		return redirect('/dashboard/'.$id);
+		return redirect("/".$id.'?admin=1');
 	}
 	
 	public function pin ($id,$messageId){
@@ -54,15 +54,16 @@ class MessageController extends Controller
 							'isHidden' => 0
 							]);
 		};
-		return redirect('/dashboard/'.$id);
+		return redirect($id."?admin=1");
 	}
 	
 	public function show ($id,$messageId) {
 		$message = Message::with('user','replies')->findOrFail($messageId);
-		return view('showMessage',[
+		return view('detailMessage',[
 			"message" => $message
 		]);
 	}
+
 	public function dashboardShow ($id,$messageId) {
 		$message = Message::with('user','replies')->findOrFail($messageId);
 		return view('dashboardReply',[

@@ -25,12 +25,13 @@ class ReplyController extends Controller
 		
 		Reply::create($message_data);
 		
-		return redirect('/'.$user_id.'/'.$message_id)->with('success','Pesan balasan anda berhasil dikirimkan.');
+		return redirect('/'.$user_id.'/'.$message_id . ($request->query('admin') ? "?admin=1" : ""))
+		->with('success','Pesan balasan anda berhasil dikirimkan.');
 	}
 	
     public function destroy ($id,$messageId,$replyId){
 		Reply::destroy($replyId);
-		return redirect('/dashboard/'.$id.'/'.$messageId)->with('danger','Pesan balasan Telah dihapus');
+		return redirect($id.'/'.$messageId.'?admin=1')->with('danger','Pesan balasan Telah dihapus');
 	}
 	
 	public function hide ($id,$messageId,$replyId){
@@ -39,11 +40,9 @@ class ReplyController extends Controller
 		if ($reply->isHidden) {
 			$reply->update(['isHidden' => 0]);
 		}else {
-			$reply->update(['isHidden' => 1,
-							'isPinned' => 0,
-							]);
+			$reply->update(['isHidden' => 1]);
 		};
-		return redirect('/dashboard/'.$id.'/'.$messageId);
+		return redirect($id.'/'.$messageId.'?admin=1');
 		
 	}
 }

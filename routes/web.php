@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ReplyController;
+use App\Http\Middleware\OnlyOwnResources;
+use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\KeepAdmin;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,29 +21,32 @@ use App\Http\Controllers\ReplyController;
 Route::get('/', function () {
     return view('index');
 });
-Route::get('/login',fn() => view('login'));
+Route::get('/login',fn() => view('login'))->middleware('guest')->name("login");
+Route::post('/login',[UserController::class,'authenticate'])->middleware('guest');
 
-Route::get('/signup',fn() => view('signup'));
+Route::get('/signup',fn() => view('signup'))->name("signup")->middleware('guest');
+Route::post('/signup',[UserController::class,'store'])->middleware('guest');
+Route::post('/logout',[UserController::class,'logout'])->middleware('auth');
 
-Route::get('/receive',fn() => view('receive'));
-Route::get('/sender',fn() => view('sender'));
-Route::patch('/dashboard/{id}/{messageId}/{replyId}/hide',[ReplyController::class,'hide']);
-Route::delete('/dashboard/{id}/{messageId}/{replyId}',[ReplyController::class,'destroy']);
-Route::get('/dashboard/{id}',[UserController::class,'dashboard']);
-Route::get('/dashboard/{id}/{messageId}',[MessageController::class,'dashboardShow']);
-Route::delete('/dashboard/{id}/{messageId}',[MessageController::class,'destroy']);
-Route::patch('/dashboard/{id}/{messageId}/hide',[MessageController::class,'hide']);
-Route::patch('/dashboard/{id}/{messageId}/pin',[MessageController::class,'pin']);
-
+Route::middleware([Authenticate::class, OnlyOwnResources::class])->group(function () {
+    Route::patch('/{id}/settings',[UserController::class,'settings']);
+    Route::patch('/{id}/bio',[UserController::class,'bio']);
+    Route::patch('/{id}/avatar',[UserController::class,'avatar']);
+    Route::delete('/{id}/avatar',[UserController::class,'avatarDelete']);
+    Route::patch('/{id}/password',[UserController::class,'password']);
+    
+    Route::patch('/{id}/{messageId}/{replyId}/hide',[ReplyController::class,'hide']);
+    Route::delete('{id}/{messageId}/{replyId}',[ReplyController::class,'destroy']);
+    Route::delete('/{id}/{messageId}',[MessageController::class,'destroy']);
+    Route::patch('/{id}/{messageId}/hide',[MessageController::class,'hide']);
+    Route::patch('/{id}/{messageId}/pin',[MessageController::class,'pin']);
+});
 
 
 Route::get('/{id}/{messageId}',[MessageController::class,'show']);
-
 Route::get('/{id}',[UserController::class,'show']);
 
 Route::post('{id}/{messageId}',[ReplyController::class,'store']);
-
-
 Route::post('/{id}',[MessageController::class,'store']);
 
 

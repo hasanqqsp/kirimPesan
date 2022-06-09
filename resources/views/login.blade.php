@@ -1,46 +1,42 @@
-@extends('layouts.main')
+@extends('layouts.36rem')
 @section('page_title')
 Masuk kirimPesan
 @endsection
 
 @section('header_text')
-Masuk ke dashboard pribadimu dan  lihat pesan anonim dari teman.</h4>
+Masuk ke dashboard pribadimu dan  lihat pesan anonim dari teman.
 @endsection
 
 @section('main_container')
-  				<div class="card text-left" style="width: 25rem;">
-  				
-				  <div class="card-header d-flex justify-content-between">
-				  <h2 class="h3 my-2">Login</h2> <a class="btn btn-primary m-1" href="/">Home</a>
-				  </div>
+		@error('credentials')
+		<div class="alert alert-danger my-2">
+			{{$message}}
+		</div>	
+		@enderror
+		
+		
 		 	<form method="post">
-				  <ul class="list-group list-group-flush">
-				    <li class="list-group-item">
-				     <div class="alert alert-danger" role="alert">
-					  A simple danger alert—check it out!
-					</div>
-				    </li>
-				    <li class="list-group-item">
-				    <div class="mb-3">
-					  <label for="email" class="form-label">Alamat Email</label>
-					  <input type="email" class="form-control"autofocus id="email" placeholder="name@example.com">
-					</div>
-				    </li>
-				    
-				    <li class="list-group-item">
-				    <div class="mb-3">
-					  <label for="password" class="form-label">Kata Sandi</label>
-					  <input type="password" class="form-control" id="password" placeholder="password">
-					</div>
-				    </li>
-				    <li class="list-group-item">
+				 @csrf		    
+				<div class="my-3 form-floating">
+					<input type="email" class="form-control @error("email") is-invalid @enderror" id="email" name="email" value="{{old("email")}}" placeholder="email">
+					<label for="email" class="form-label">Alamat Email</label>
+					@error("email")
+						<div class="invalid-feedback">
+							{{$message}}
+						</div>
+					@enderror
+				</div>
+				<div class="my-3 form-floating">
+					<input type="password" class="form-control @error("password") is-invalid @enderror" id="password" name="password" placeholder="password">
+					<label for="password" class="form-label">Kata Sandi</label>
+					@error("password")
+						<div class="invalid-feedback">
+							{{$message}}
+						</div>
+					@enderror
+				</div>
 				    <div class="my-3 d-grid gap-2">
-					  <button class="btn btn-primary btn-block">Login</button>
-					</div>
-				    </li>
-				    </ul>
-				 
-			    </div>
+					  <button class="btn btn-primary btn-lg">Login</button>
+					</div>			   
 			    </form>
-			  </div>
 	@endsection

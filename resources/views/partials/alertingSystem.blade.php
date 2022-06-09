@@ -1,6 +1,6 @@
 
 
-<div class="toast-container position-fixed top-0 end-0 p-3">
+<div style="z-index: 99" class="toast-container position-fixed top-0 end-0 p-3">
   @if(session()->has('primary'))
   <div class="toast align-items-center text-bg-primary border-0 bg-primary" role="alert" aria-live="assertive" aria-atomic="true">
 	<div class="d-flex">
@@ -45,3 +45,13 @@
 </div>
 </div>
 @endif
+</div>
+<div class="position-fixed bottom-0 start-50">
+  <div class="position-relative translate-middle toast align-items-center text-white bg-dark border-0" style="width:10rem" id="toastCopy" role="alert" aria-live="assertive" data-bs-delay="3000" aria-atomic="true">
+      <div class="d-flex">
+      <div class="toast-body text-center flex-fill">
+          Tautan Disalin
+      </div>
+      </div>
+  </div>
+</div>

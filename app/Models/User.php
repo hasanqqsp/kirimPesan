@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Mews\Purifier\Casts\CleanHtmlOutput;
 
 class User extends Authenticatable
 {
@@ -29,8 +29,18 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
-    
+    // protected $casts = [
+    //     "bio" => CleanHtmlOutput::class
+    // ];
     public function messages(){
 		return $this->hasMany(Message::class);
-	}
+    }
+    
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($user) { // before delete() method call this
+             $user->messages()->delete();
+        });
+    }
 }
