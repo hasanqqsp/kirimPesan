@@ -38,5 +38,9 @@ Masuk ke dashboard pribadimu dan  lihat pesan anonim dari teman.
 				    <div class="my-3 d-grid gap-2">
 					  <button class="btn btn-primary btn-lg">Login</button>
 					</div>			   
-			    </form>
+				</form>
+				
+				<div class="mt-2 text-center text-muted">
+					<em>Belum memiliki akun? <a href="/signup0">Daftar disini</a></em>
+				</div>
 	@endsection
