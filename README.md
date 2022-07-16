@@ -16,6 +16,20 @@ Project ini dibuat menggunakan Framework PHP Modern Laravel 8
 
 Project ini dibuat mengikuti tutorial Laravel 8 dari [Web Programming UNPAS](https://www.youtube.com/c/webprogrammingunpas). Project ini juga sepenuhnya _opensource_ dibawah MIT License
 
+Demo : http://kirim-pesan-laravel.herokuapp.com/
+
+## Fitur
+* Create Dashboard and Login (ada bug) setelah signup tidak langsung login
+* Change avatar (demo tidak berjalan karena pakai hosting gratis)
+* Change bio
+* Hide pesan
+* Hide pesan otomatis
+* Pin / sematkan pesan
+* Basic markdown (seperti Whatsapp)
+* Salin link (tidak berfungsi karena masih http)
+
+Mohon maaf kalau ngebug
+
 ## Teknologi yang digunakan
 ### Development Environment
 Project ini merupakan project Laravel pertama saya yang sepenuhnya dikembangkan di perangkat android
